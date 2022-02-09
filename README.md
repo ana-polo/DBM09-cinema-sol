@@ -1,6 +1,6 @@
-# DBM09-Cine
+# DBM09-Cinema Solution
 
-![Logo de Team](https://github.com/ana-polo/DBM09-cine/blob/main/DBM.gif "Team logo")
+![Logo de Team](https://github.com/ana-polo/DBM09-cinema-sol/blob/main/DBM.gif "Team logo")
 
 ## Table of Contents
 
@@ -14,7 +14,7 @@
 
 ### 1. General Info
 
-Training exercise of design and management of databases carried out in the field of Database Management in the Higher Vocational training Degree in Management of Computer Network Systems*
+Training exercise of design and management of databases carried out in the field of Database Management in the Higher Vocational training Degree in Management of Computer Network Systems
 
 &nbsp;
 

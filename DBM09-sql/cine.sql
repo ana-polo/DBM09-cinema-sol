@@ -4,35 +4,41 @@ CREATE DATABASE cinema CHARACTER SET 'latin1' COLLATE='latin1_bin';
 
 USE cinema;
 
-CREATE TABLE film
-(id_film INTEGER PRIMARY KEY,
-title VARCHAR(25) NOT NULL,
-year_film year NOT NULL);
+CREATE TABLE film (
+    id_film INTEGER PRIMARY KEY,
+    title VARCHAR(25) NOT NULL,
+    year_film YEAR NOT NULL
+);
 
-CREATE TABLE copy
-(id_copy CHAR(8)PRIMARY KEY,
-deteriored BOOLEAN DEFAULT FALSE NOT NULL,
-fk_id_film INTEGER NOT NULL,
-price_rent DECIMAL(3,2) NOT NULL,
-estade ENUM ('bueno','malo','regular','pesimo') NOT NULL,
-CONSTRAINT fk_id_film FOREIGN KEY (id_film) 
-REFERENCES film(id_film ));
+CREATE TABLE copy (
+    id_copy CHAR(8) PRIMARY KEY,
+    deteriored BOOLEAN DEFAULT FALSE NOT NULL,
+    fk_id_film INTEGER NOT NULL,
+    price_rent DECIMAL(3 , 2 ) NOT NULL,
+    estate ENUM('bueno', 'malo', 'regular', 'pesimo') NOT NULL,
+    CONSTRAINT fk_id_film FOREIGN KEY (id_film)
+        REFERENCES film (id_film)
+);
 
-CREATE TABLE customer
-(id_customer INTEGER PRIMARY KEY,
-customer_name VARCHAR(15) NOT NULL,
-customer_surname VARCHAR (25) NOT NULL,
-town VARCHAR(15) NOT NULL);
+CREATE TABLE customer (
+    id_customer INTEGER PRIMARY KEY,
+    customer_name VARCHAR(15) NOT NULL,
+    customer_surname VARCHAR(25) NOT NULL,
+    town VARCHAR(15) NOT NULL
+);
 
-CREATE TABLE loans
-(id_loan INTEGER PRIMARY KEY,
-date_loan DATE NOT NULL,
-deathline DATE NOT NULL,
-date_deliver DATE,
-fk_id_customer INTEGER NOT NULL,
-id_copy CHAR(8) NOT NULL,
-FOREIGN KEY (id_customer) REFERENCES customer(id_customer),
-FOREIGN KEY (cod_copy) REFERENCES copia (cod_copy));
+CREATE TABLE loans (
+    id_loan INTEGER PRIMARY KEY,
+    date_loan DATE NOT NULL,
+    deathline DATE NOT NULL,
+    date_deliver DATE,
+    fk_id_customer INTEGER NOT NULL,
+    id_copy CHAR(8) NOT NULL,
+    FOREIGN KEY (id_customer)
+        REFERENCES customer (id_customer),
+    FOREIGN KEY (cod_copy)
+        REFERENCES copia (cod_copy)
+);
 
 INSERT INTO film
 VALUES (1,'La vida es bella','2002'),
