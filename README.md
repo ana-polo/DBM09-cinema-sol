@@ -43,10 +43,7 @@ Students:
 
 📝 **TO DO:**
 
-        1. Create and load the 'Cine' Database with the attached file cine.txt, and whose structe can be see in the next image:
-
-            ![DB Structure](https://github.com/ana-polo/DBM09-videoclub/blob/main/structureDB.gif "DB")
-
+        1. Create and load the 'Cine' Database with the attached file cine.txt, and whose structe can be see in the image.
 
             A movie has multiple copies and each copy is only for one movie.
             A customer can rent several copies but each rentintg copy is for a single customer.
@@ -57,6 +54,8 @@ Students:
             • Do not coment the query for indicating what it does.
             • Do not join tables.
             • Use more tables than necessary.
+
+   ![DB Structure](https://github.com/ana-polo/DBM09-videoclub/blob/main/structureDB.gif "DB")
 
 
 👀 **Remember not forget!**
