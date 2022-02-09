@@ -39,114 +39,29 @@ Students:
 
 ***
 
-#### i. Create a new database called greengrocer with the following tables
+#### i. Create a new database called cinema with the following tables
 
 📝 **TO DO:**
 
-        1. Decide the appropriate name for each field, the most appropriate data type and whether it is mandatory that the field be 
-    informed or not.
-    
-        2. Think about the order in which you will create the tables, keep in mind the restrictions. Define ALL possible constraints 
-    primary keys, foreign keys, etc.
+        1. Create and load the 'Cinema' Database with the attached file cinema.txt, and whose structe can be see in the next image:
 
-⚠️ **WARNING:**
+            ![DB Structure](https://github.com/ana-polo/DBM09-videoclub/blob/main/structure DB.gif "DB")
 
-- All the operations must be done in the creation of the tables.
+
+            A movie has multiple copies and each copy is only for one movie.
+            A customer can rent several copies but each rentintg copy is for a single customer.
+            A copy can be lent several times, but all loans are of the same copy (not at the same time).
+            A customer can rent the same movie multiple times.
+
+        2. Get the data that is indicate in the queries, keeping in mind that the following cases will be considered a bad way to resolve the querys and they make this query will be marked with  0 points:
+            • Do not coment the query for indicating what it does.
+            • Do not join tables.
+            • Use more tables than necessary.
+
 
 👀 **Remember not forget!**
 
 - Properly format and document the code.
-
-&nbsp;
-
-<details>
-    <summary>CLICK ME TO SEE THE TABLES DEFINITION</summary>
-
-<br />
-
-##### CLASSES
-
-    - IDENTIFIER with 5 characteres.
-    - Name: It is a string of 10 characteres that can not be NULL.
-    - Season: It can only be *spring*, *winter*, *fall*, *summer*, *all the year* or a combination of these values. The default value is *all the year*.
-
-##### UNITS
-
-    - IDENTIFIER, which is a numeric field that identifies each product.
-    - Name: It is a string that it can not be NULL.
-
-##### PRODUCTS
-
-    - IDENTIFIER, which is a numeric field that identifies the record.
-    - fk_class.
-    - fk_unity.
-    - Price, can not be NULL.
-
-</details>
-
-&nbsp;
-&nbsp;
-
-#### ii. Recording data
-
-***
-
-📝 **TO DO:**
-
-    - Load the next information into the tables.
-
-⚠️ **WARNING:**
-
-- The operations CAN NOT be done in the creation of the tables.
-
-👀 **Remember to not forget!**
-
-- Properly format and document the code.
-
-&nbsp;
-<details>
-    <summary>CLICK ME TO SEE THE DATA</summary>
-
-<br />
-
-##### CLASSES
-
-    FR001 ; fruit      ; spring ; summer 
-    FR002 ; fruit      ; winter 
-    FR003 ; fruit      ; summer 
-    FR004 ; fruit      ; all the year 
-    LE001 ; legumes    ; fall ; winter 
-    HO001 ; vegetables ; all the year 
-    FRT01 ; fruit      ; fall 
-    FRT02 ; fruit      ; all the year
-
-##### UNITS
-
-    1 ; grammes
-    2 ; kilos 
-    3 ; units 
-    4 ; pieces 
-    5 ; packs
-    6 ; mesh
-
-##### PRODUCTS
-
-    1  ; oranges      ; FR002 ; 2 ; 1.80 
-    2  ; tangerines   ; FR002 ; 2 ; 1.90 
-    3  ; lentils      ; LE001 ; 5 ; 1.20 
-    4  ; chickpeas    ; LE001 ; 5 ; 2.20  
-    5  ; chestnuts    ; FR001 ; 2 ; 2.20 
-    6  ; apples       ; FR004 ; 2 ; 2.50 
-    7  ; apples       ; FR004 ; 5 ; 2.90 
-    8  ; strawberries ; FR002 ; 5 ; 1.50 
-    9  ; melon        ; FR003 ; 3 ; 0.80 
-    10 ; watermelon   ; FR003 ; 3 ; 0.90 
-    11 ; tomatos      ; FRT01 ; 2 ; 1.90
-
-</details>
-
-&nbsp;
-&nbsp;
 
 #### iii. Querying data
 
@@ -166,25 +81,68 @@ Students:
 
 <br />
 
-     1. Units in which each fruit is sold (name and unit) 
-     2. List of summer products sold by kilos 
-     3. List of product classes worth less than €2 
-     4. List of legumes that are sold in packages at less than € 1.5 (name and price). 
-     5. The average price of summer products 
-     6. The average price of products sold in units 
-     7. Units in which chestnuts are sold and what season they are 
-     8. List of autumn products 
-     9. List of products that only occur in autumn 
-     10. List of fruits sold 
-     11. List of products the class to which they belong 
-     12. List of autumn products that are not sold by the kilos. 
-     13. Name (not repeated) of products that are fruits 
-     14. List of legumes 
-     15. How many different legumes are there? 
-     16. What class do tomatoes belong to? 
-     17. Displays product codes for fruits and vegetables 
-     18. What is the largest product code for fruits? 
-     19. In which units is each fruit sold (name and unit)? 
-     20. List of summer products sold by kilos.
+    1.- List the name and surname of the customers who have rented the film 
+'La vida es bella'. Each customer must appear only once. (0.5 points) */
+
+2.- List the names of the clients and how many copies has rented each of them. Display the result sorted by the number of copies rented descending. (0.5 points)
+
+3.- Show the income that has been obtained from the rental of the film 'Los puentes de Madinson' per month and year. Use fecha_prestamo to calculate it. (0.5 points)
+
+4.- List the title of the films that have been rented in alphabetical order.  Each title must come out only once. Do it in three different ways (INNER JOIN, IN, EXISTS). (1 point)
+
+5.- List the title of the films that have been rented in 2021 and have not been rented in 2022. Each title should appear only once. Takes the field fecha_prestamo as the date. (0.75 points)
+
+6.- List, using a single query, the copies (cod_copia) and the title of the films that are deteriorated and those that are not. The fields will be separated by an arrow (==>). The result will have to look like this:
+...
+The copy==>CINE/004==>of the film==>Aterriza como puedes==>it is deteriorated
+The copy==>CINE/007==>of the film==>Archivo==>it is deteriorated
+The copy==>CINE/001==>of the film==>La vida es bella==>it is not deteriorated.
+The copy==>CINE/002==>of the film==>Los puentes de Madison==>it is not deteriorated
+The copy==>CINE/003==>of the film==>Terror==>it is not deteriorated
+The copy==>CINE/005==>of the film==>Vivo==>it is not deteriorated
+...
+ Don't do it using IF or CASE (0.75 points)
+ 
+7.- For the movies  that has been delivered late by any customer, display the copy number, the deadline, the delivery date and the period between the two dates (in days). Use the  
+TIMESTAMPDIFF(unit,fecha_fin, fecha_inicio) where unit means the unit of time that you want to subtract (YEAR, MONTH, DAY) (0.5 points)
+ 
+8. Insert as a customer a cohabiting brother of Teresa Alvarez Perez who is called Pepe. The only data you can put literally are Pepe, Teresa and Alvarez Perez.  (0.75 points)
+
+9.- List the film's title, the copy code and the rental price of the non-deteriorated copies that are cheapest for renting it. Use only one query. Do it in two different ways (1 point)
+
+10. List, for each movie, the rental price of the cheapest copy. The result will show the title of the film and the rental price (0.5 points)
+
+11.- Display the film's title and the revenue generated for the films of the year 2002 that have generated more than € 5.5 in rentals. (0.75 points)
+
+12.-List all the titles and indicate wheter the rental price of their copies is equal or greater than 2.5 euros or less than 2.5 euros (two conditions). Don't do it using UNION. Use the structure most appropriate to the case. The output will be something like this:
+
+'La vida es bella', 'The price is equal or greater than2.5 euros'
+'Los puentes de Madison', 'The price is equal or greater than 2.5 euros'
+'Terror', 'the price is less than 2.5 euros'
+'Aterriza como puedas', 'The price is equal or greater than 2.5 euros'
+
+Repeated values should not be displayed (0.75 points)
+
+13. Displays the customer's name, the copy code that he has rented, and the state of disrepair of this copy. The indicators for the status of  disrepair are one of these cases: 
+
+If the condition is good is in a satisfactory state
+If the state is bad is in an unsatisfactory state
+If the state is regular is in an unsatisfactory state
+If the state is lousy  is in an unsatisfactory state
+In any other state  is in a not defined state.
+
+The output will be something like this:
+...
+The COPY CINE/001 rented by Ana Perez Lopez is in a satisfactory condition
+The COPY CINE/002 rented by Ana Perez Lopez is in an unsatisfactory state
+The COPY CINE/001 rented by Pepe Lopez Pelayo is in a satisfactory state
+The COPY CINE/001 rented by Juan Pelayo Millan is in a satisfactory condition
+....
+
+Don't use a UNION in this script. Use the structure most appropriate to the case Do not display duplicate values (0.75 points)
+
+14.- Updates the price of copies for the films from the year 2002, decreasing them a 10% (0.5 points)
+
+15.- Delete customers who have not rented any film in 2021 (0.5 points) 
 
 </details>
