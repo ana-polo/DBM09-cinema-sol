@@ -45,7 +45,7 @@ Students:
 
         1. Create and load the 'Cine' Database with the attached file cine.txt, and whose structe can be see in the next image:
 
-            ![DB Structure](https://github.com/ana-polo/DBM09-videoclub/blob/main/structure DB.gif "DB")
+            ![DB Structure](https://github.com/ana-polo/DBM09-videoclub/blob/main/structureDB.gif "DB")
 
 
             A movie has multiple copies and each copy is only for one movie.
