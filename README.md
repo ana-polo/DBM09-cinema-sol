@@ -1,6 +1,6 @@
-# DBM06-Greengrocer
+# DBM09-Videoclub
 
-![Logo de Team](https://github.com/ana-polo/DBM06-greengrocer-sol/blob/main/DBM.gif "Team logo")
+![Logo de Team](https://github.com/ana-polo/DBM09-videoclub/blob/main/DBM.gif "Team logo")
 
 ## Table of Contents
 
