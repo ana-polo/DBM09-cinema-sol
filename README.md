@@ -1,6 +1,6 @@
 # DBM09-Cine
 
-![Logo de Team](https://github.com/ana-polo/DBM09-videoclub/blob/main/DBM.gif "Team logo")
+![Logo de Team](https://github.com/ana-polo/DBM09-cine/blob/main/DBM.gif "Team logo")
 
 ## Table of Contents
 
