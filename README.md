@@ -43,24 +43,19 @@ Students:
 
 📝 **TO DO:**
 
-        1. Create and load the 'Cine' Database with the attached file cine.txt, and whose structe can be see in the image.
-
+        1. Create and load the 'Cine' Database with the attached file cine.txt, and whose structure can be see in the image. Keep in mind that, in this case:
             A movie has multiple copies and each copy is only for one movie.
             A customer can rent several copies but each rentintg copy is for a single customer.
             A copy can be lent several times, but all loans are of the same copy (not at the same time).
             A customer can rent the same movie multiple times.
 
         2. Get the data that is indicate in the queries, keeping in mind that the following cases will be considered a bad way to resolve the querys and they make this query will be marked with  0 points:
-            • Do not coment the query for indicating what it does.
+            • Do not comment a query for indicating what it does.
             • Do not join tables.
             • Use more tables than necessary.
 
    ![DB Structure](https://github.com/ana-polo/DBM09-videoclub/blob/main/structureDB.gif "DB")
 
-
-👀 **Remember not forget!**
-
-- Properly format and document the code.
 
 #### iii. Querying data
 

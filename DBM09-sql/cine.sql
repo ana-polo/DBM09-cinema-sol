@@ -1,39 +1,40 @@
-DROP DATABASE IF EXISTS CINE;
+DROP DATABASE IF EXISTS cinema;
 
-CREATE DATABASE CINE CHARACTER SET 'latin1' COLLATE='latin1_bin';
+CREATE DATABASE cinema CHARACTER SET 'latin1' COLLATE='latin1_bin';
 
-USE CINE;
+USE cinema;
 
-CREATE TABLE pelicula
-(id_pelicula INTEGER PRIMARY KEY,
-titulo VARCHAR(25) NOT NULL,
-anio year NOT NULL);
+CREATE TABLE film
+(id_film INTEGER PRIMARY KEY,
+title VARCHAR(25) NOT NULL,
+year_film year NOT NULL);
 
-CREATE TABLE copia
-(cod_copia CHAR(8)PRIMARY KEY,
-deteriorada BOOLEAN DEFAULT FALSE NOT NULL,
-id_pelicula INTEGER NOT NULL,
-precio_alquiler DECIMAL(3,2) NOT NULL,
-estado ENUM ('bueno','malo','regular','pesimo') NOT NULL,
-CONSTRAINT fk_pelicula FOREIGN KEY (id_pelicula) REFERENCES pelicula(id_pelicula));
+CREATE TABLE copy
+(id_copy CHAR(8)PRIMARY KEY,
+deteriored BOOLEAN DEFAULT FALSE NOT NULL,
+fk_id_film INTEGER NOT NULL,
+price_rent DECIMAL(3,2) NOT NULL,
+estade ENUM ('bueno','malo','regular','pesimo') NOT NULL,
+CONSTRAINT fk_id_film FOREIGN KEY (id_film) 
+REFERENCES film(id_film ));
 
-CREATE TABLE cliente
-(id_cliente INTEGER PRIMARY KEY,
-nombre VARCHAR(15) NOT NULL,
-apellidos VARCHAR (25) NOT NULL,
-ciudad VARCHAR(15) NOT NULL);
+CREATE TABLE customer
+(id_customer INTEGER PRIMARY KEY,
+customer_name VARCHAR(15) NOT NULL,
+customer_surname VARCHAR (25) NOT NULL,
+town VARCHAR(15) NOT NULL);
 
-CREATE TABLE prestamo
-(id_prestamo INTEGER PRIMARY KEY,
-fecha_prestamo DATE NOT NULL,
-fecha_tope DATE NOT NULL,
-fecha_entrega DATE,
-id_cliente INTEGER NOT NULL,
-cod_copia CHAR(8) NOT NULL,
-FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente),
-FOREIGN KEY (cod_copia) REFERENCES copia (cod_copia));
+CREATE TABLE loans
+(id_loan INTEGER PRIMARY KEY,
+date_loan DATE NOT NULL,
+deathline DATE NOT NULL,
+date_deliver DATE,
+fk_id_customer INTEGER NOT NULL,
+id_copy CHAR(8) NOT NULL,
+FOREIGN KEY (id_customer) REFERENCES customer(id_customer),
+FOREIGN KEY (cod_copy) REFERENCES copia (cod_copy));
 
-INSERT INTO pelicula
+INSERT INTO film
 VALUES (1,'La vida es bella','2002'),
  (2,'Los puentes de Madison','2002'),
  (3,'Terror','2002'),
@@ -50,7 +51,7 @@ VALUES (1,'La vida es bella','2002'),
   (14,'Guapis','2004'),
   (15,'Tenet 32','2004');
 
-INSERT INTO copia VALUES
+INSERT INTO copy VALUES
 ('CINE/001',FALSE,1,3.5,'bueno'),
 ('CINE/002',FALSE,2,2.5,'malo'),
 ('CINE/003',FALSE,3,1.5,'bueno'),
@@ -78,7 +79,7 @@ INSERT INTO copia VALUES
 ('CINE/026', TRUE,11,1.5, 'malo'),
 ('CINE/027',FALSE,12,4.5, 'bueno');
 
-INSERT INTO cliente 
+INSERT INTO customer 
 VALUES(300,'Ana','Perez Lopez','Santander'),
 (301,'Pepe','Lopez Pelayo','Santander'),
 (302,'Juan', 'Pelayo Millan','Madrid'),
@@ -95,7 +96,7 @@ VALUES(300,'Ana','Perez Lopez','Santander'),
 (313,'Teresa','Gutierrez Camas','Santander'),
 (314,'Teresa','Alvarez Perez','Santander');
 
-INSERT INTO prestamo VALUES
+INSERT INTO loans VALUES
 (1001, '2021/03/03','2021/03/08','2021/03/10',300,'CINE/001'),
 (1002, '2021/03/11','2021/03/16','2021/03/13',301,'CINE/001'),
 (1003, '2021/03/17','2021/03/22','2021/03/20',302,'CINE/001'),
