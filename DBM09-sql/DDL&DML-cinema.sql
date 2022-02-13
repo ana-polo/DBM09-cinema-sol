@@ -1,8 +1,8 @@
-DROP DATABASE IF EXISTS cine;
+DROP DATABASE IF EXISTS cinema;
 
-CREATE DATABASE cine CHARACTER SET 'latin1' COLLATE='latin1_bin';
+CREATE DATABASE cinema CHARACTER SET 'latin1' COLLATE='latin1_bin';
 
-USE cine;
+USE cinema;
 
 CREATE TABLE film (
     id_film INTEGER NOT NULL, 
