@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS cinema;
 
-CREATE DATABASE cinema CHARACTER SET 'latin1' COLLATE='latin1_bin';
+CREATE DATABASE cinema CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci;
 
 USE cinema;
 
@@ -8,14 +8,14 @@ CREATE TABLE film (
     id_film INTEGER NOT NULL, 
     title VARCHAR(25) NOT NULL, 
     year_film YEAR NOT NULL, 
-    CONSTRAINT pk PRIMARY KEY (id_film)
+    CONSTRAINT pk PRIMARY KEY ( id_film )
 );
 
 CREATE TABLE copy (
     id_copy CHAR( 8 ) NOT NULL, 
     deteriored BOOLEAN DEFAULT FALSE NOT NULL, 
     fk_id_film INTEGER NOT NULL, 
-    price_rent DECIMAL( 3 ,  2 ) NOT NULL, 
+    price_rent DECIMAL( 3,  2 ) NOT NULL, 
     state ENUM('good',  'bad',  'regular',  'very bad') NOT NULL, 
     CONSTRAINT pk PRIMARY KEY ( id_copy ), 
     CONSTRAINT fk_id_film FOREIGN KEY ( fk_id_film )
@@ -30,14 +30,14 @@ CREATE TABLE customer (
     CONSTRAINT pk PRIMARY KEY ( id_customer )
 );
 
-CREATE TABLE lending (
-    id_lending INTEGER NOT NULL,
-    date_lending DATE NOT NULL,
+CREATE TABLE renting (
+    id_renting INTEGER NOT NULL,
+    renting_date DATE NOT NULL,
     deathline DATE NOT NULL,
-    date_deliver DATE,
+    delivering_date DATE,
     fk_id_customer INTEGER NOT NULL,
     fk_id_copy CHAR( 8 ) NOT NULL,
-    CONSTRAINT pk PRIMARY KEY ( id_lending ),
+    CONSTRAINT pk PRIMARY KEY ( id_renting ),
     FOREIGN KEY ( fk_id_customer )
         REFERENCES customer ( id_customer ),
     FOREIGN KEY ( fk_id_copy )
@@ -107,7 +107,7 @@ VALUES(300, 'Ana', 'Perez Lopez', 'Santander'),
 (313, 'Teresa', 'Gutierrez Camas', 'Santander'), 
 (314, 'Teresa', 'Alvarez Perez', 'Santander');
 
-INSERT INTO lending VALUES
+INSERT INTO renting VALUES
 (1001,  '2021/03/03', '2021/03/08', '2021/03/10', 300, 'CINE/001'), 
 (1002,  '2021/03/11', '2021/03/16', '2021/03/13', 301, 'CINE/001'), 
 (1003,  '2021/03/17', '2021/03/22', '2021/03/20', 302, 'CINE/001'), 

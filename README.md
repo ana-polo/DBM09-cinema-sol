@@ -105,7 +105,7 @@ Students:
             If the condition is good is in a satisfactory state
             If the state is bad is in an unsatisfactory state
             If the state is regular is in an unsatisfactory state
-            If the state is lousy  is in an unsatisfactory state
+            If the state is 'very bad'  is in an unsatisfactory state
             In any other state  is in a not defined state.
         The output will be something like this:
             ...
