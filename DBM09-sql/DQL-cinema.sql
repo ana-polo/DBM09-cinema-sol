@@ -340,24 +340,25 @@ WHERE customer.id_customer = lending.id_customer
 -- 14.- Updates the price of copies for the films from the year 2002, decreasing them a 10% (0.5 points) 
 */
 
-UPDATE copia
-SET precio_alquiler = ROUND(precio_alquiler*0.9,2)
-WHERE id_pelicula IN (SELECT id_pelicula
-                                     FROM pelicula
-                                     WHERE anio = '2002');
+UPDATE copy
+SET copy.price_lending = ROUND( copy.price_lending * 0.9, 2 )
+WHERE film.id_film IN (SELECT film.id_film
+                                     FROM film
+                                     WHERE film.year = '2002');
 
-O bien:
-UPDATE copia
-SET precio_alquiler = ROUND(precio_alquiler - precio_alquiler*0.1,2)
-WHERE id_pelicula IN (SELECT id_pelicula
-                                     FROM pelicula
-                                     WHERE anio = '2002');
+/* OPC 2: */
+
+UPDATE copy
+SET copy.price_lending = ROUND( copy.price_lending - copy.price_lending * 0.1, 2 )
+WHERE film.id_film IN (SELECT film.id_film
+                                     FROM film
+                                     WHERE film.anio = '2002');
 
 /*
 -- 15.- Delete customers who have not rented any film in 2021 (0.5 points) 
 */
 
-DELETE FROM cliente
-WHERE id_cliente NOT IN (SELECT id_cliente
-                                            FROM prestamo
-                                            WHERE YEAR(date_lending) = '2021');
+DELETE FROM customer
+WHERE customer.id_customer NOT IN (SELECT id_customer
+                                            FROM lending
+                                            WHERE YEAR( lending.date_lending ) = '2021' );
