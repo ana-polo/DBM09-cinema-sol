@@ -54,7 +54,7 @@ Students:
             • Do not join tables.
             • Use more tables than necessary.
 
-   ![DB Structure](https://github.com/ana-polo/DBM09-videoclub/blob/main/structureDB.gif "DB")
+   ![DB Structure](https://github.com/ana-polo/DBM09-videoclub/blob/main/ER-cinema.gif "DB")
 
 
 #### iii. Querying data
