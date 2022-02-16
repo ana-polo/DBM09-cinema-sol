@@ -306,11 +306,11 @@ SELECT DISTINCT
     ' ',
     customer.surname,
     CASE
-        WHEN estado = 'good' THEN 'is in a satisfactory condition'
-        WHEN estado = 'bad' THEN 'is in an unsatisfactory condition'
-        WHEN estado = 'regular' THEN 'is in an unsatisfactory condition'
-        WHEN estado = 'loosy' THEN 'is in an unsatisfactory condition'
-        ELSE 'is in a not defined state'
+        WHEN estado = 'good' THEN ' is in a satisfactory condition '
+        WHEN estado = 'bad' THEN ' is in an unsatisfactory condition '
+        WHEN estado = 'regular' THEN ' is in an unsatisfactory condition '
+        WHEN estado = 'loosy' THEN ' is in an unsatisfactory condition '
+        ELSE ' is in a not defined state '
     END AS Estate
 FROM
     customer,
@@ -324,15 +324,17 @@ WHERE
 /* OPC 2: */
 
 SELECT CASE 
-WHEN copy.estate = "good" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", c.nombre,"tiene un estado satisfactorio")
-WHEN copy.estate = "regular" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", c.nombre,"tiene un estado poco satisfactorio")
-WHEN copy.estate = "bad" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", c.nombre,"tiene un estado no satisfactorio")
-WHEN copy.estate = "lousy" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", c.nombre,"tiene un estado nada satisfactorio")
+WHEN copy.estate = "good" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.name, " is in an unsatisfactory condition."" )
+WHEN copy.estate = "regular" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.name, " is in an unsatisfactory condition.")
+WHEN copy.estate = "bad" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.name, " is in an unsatisfactory condition.")
+WHEN copy.estate = "lousy" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ",  customer.name," is in an unsatisfactory condition.")
 ELSE concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.customer_name, " is in an undefined state")
-END  AS situacion
-FROM copyo, cliente c,prestamo p
-WHERE c.id_cliente=p.id_cliente
-   AND film.fk_id_copy=copy.id_copy;
+END  AS situation
+FROM copy, customer,lending
+WHERE customer.id_customer = lending.id_customer
+   AND film.fk_id_copy = copy.id_copy;
+
+
 
 /*
 -- 14.- Updates the price of copies for the films from the year 2002, decreasing them a 10% (0.5 points) 
