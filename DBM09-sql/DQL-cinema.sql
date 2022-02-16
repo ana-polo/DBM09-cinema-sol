@@ -9,7 +9,7 @@ USE cinema;
 
 /*
 --  1.- List the name and surname of the customers who have rented the film 'La vida es bella'. Each customer must appear only once. (0.5 points)
-*/
+
  
 SELECT DISTINCT 
     customer.customer_name AS CUSTOMER,
@@ -73,20 +73,27 @@ WHERE renting.fk_id_film = copy.fk_id_film
    AND copy.id_copy = renting.fk_id_copy
 ORDER BY film.title;
 
+
+/*OPTION 2: */
+
 SELECT DISTINCT film.title
 FROM film, copy
-WHERE renting.fk_id_film = copy.fk_id_film
+WHERE film.id_film = copy.fk_id_film
    AND copy.id_copy IN (SELECT renting.fk_id_copy 
                                      FROM renting)
 ORDER BY film.title;
 
+
+/* OPTION 3: */
+
 SELECT DISTINCT film.title
 FROM film, copy
-WHERE renting.fk_id_film = copy.fk_id_film
-   AND EXISTS (SELECT renting.fk_id_copy 
-               FROM renting
-               WHERE renting.fk_id_copy = copy.id_copy)
+WHERE film.id_film = copy.fk_id_film
+   AND EXISTS ( SELECT renting.fk_id_copy 
+                FROM renting, copy
+                WHERE renting.fk_id_copy = copy.id_copy)
 ORDER BY film.title;
+
 
 
 /*
@@ -94,21 +101,21 @@ ORDER BY film.title;
 */
 
 SELECT DISTINCT
-    film.fk_id_copy, film.title
+    copy.id_copy, film.title
 FROM
     film,
     copy,
     renting
 WHERE
-    renting.fk_id_film = copy.fk_id_film
-        AND copy.id_copy = film.fk_id_copy
-        AND YEAR(p.renting_date) = '2021'
-        AND film.fk_id_copy NOT IN (SELECT 
+    renting.fk_id_copy = copy.id_copy
+        AND copy.fk_id_film = film.id_film
+        AND YEAR( renting.renting_date ) = '2021'
+        AND copy.id_copy NOT IN ( SELECT 
             renting.fk_id_copy
         FROM
             renting
         WHERE
-            YEAR(pr.renting_date) = '2022');
+            YEAR( renting.renting_date ) = '2022' );
 
 
 /*
@@ -127,7 +134,7 @@ WHERE
 SELECT 
     CONCAT_WS( ' ',
             'The copy==>',
-            copy.id_copia,
+            copy.id_copy,
             '==>of the film==>',
             film.title,
             '==>',
@@ -136,7 +143,7 @@ FROM
     copy,
     film
 WHERE
-    renting.fk_id_film = film.id_film
+    copy.fk_id_film = film.id_film
         AND copy.deteriorated = TRUE 
 UNION SELECT 
     CONCAT_WS( ' ',
@@ -150,7 +157,7 @@ FROM
     copy,
     film
 WHERE
-    renting.fk_id_film = film.id_film
+    copy.fk_id_film = film.id_film
         AND copy.deteriorated = FALSE; 
 
 
@@ -162,7 +169,7 @@ WHERE
 SELECT 
     renting.fk_id_copy AS Copy,
     renting.deathline AS 'Death line',
-    renting.date.deliver AS 'Deliver date',
+    renting.delivering_date AS 'Deliver date',
     TIMESTAMPDIFF( DAY,
         renting.deathline,
         renting.delivering_date) AS 'Delay'
@@ -171,7 +178,7 @@ FROM
     copy,
     renting
 WHERE
-    renting.fk_id_film = copy.fk_id_film
+    film.id_film = copy.fk_id_film
         AND copy.id_copy = renting.fk_id_copy
         AND renting.deathline < renting.delivering_date;
 
@@ -186,11 +193,11 @@ SELECT (
     SELECT 
         MAX( customer.id_customer ) + 1 
     FROM 
-        customer), 'Pepe', customer.surname, customer.town
+        customer), 'Pepe', customer.customer_surname, customer.town
 FROM 
     customer
-WHERE customer.name = 'Teresa' 
-   AND customer.surname = 'Alvarez Perez';
+WHERE customer.customer_name = 'Teresa' 
+   AND customer.customer_surname = 'Alvarez Perez';
 
 
 
@@ -199,29 +206,31 @@ WHERE customer.name = 'Teresa'
 */
 
 SELECT 
-    film.title, copy.id_copy, copy.price_renting
+    film.title, copy.id_copy, copy.price_rent
 FROM
     film,
     copy
 WHERE
-    renting.fk_id_film = copy.fk_id_film
+    film.id_film = copy.fk_id_film
         AND copy.deteriorated = FALSE
-        AND copy.price_renting = ( SELECT 
-            MIN( copy.pricerenting )
+        AND copy.price_rent = ( SELECT 
+            MIN( copy.price_rent )
         FROM
             copy );
 
 
+/* OPC 2: */
+
 SELECT 
-    film.title, copy.id_copy, copy.price_renting
+    film.title, copy.id_copy, copy.price_rent
 FROM
     film,
     copy
 WHERE
-    renting.fk_id_film = copy.fk_id_film
+    film.id_film = copy.fk_id_film
         AND copy.deteriorated = FALSE
-        AND copy.price_renting <= ALL ( SELECT 
-            copy.price_renting
+        AND copy.price_rent <= ALL ( SELECT 
+            copy.price_rent
         FROM
             copy );
 
@@ -232,12 +241,12 @@ WHERE
 */
 
 SELECT 
-    film.title, MIN( copy.price.renting )
+    film.title, MIN( copy.price_rent )
 FROM
     film,
     copy
 WHERE
-    renting.fk_id_film = copy.fk_id_film
+    film.id_film = copy.fk_id_film
 GROUP BY film.title;
 
 
@@ -247,17 +256,17 @@ GROUP BY film.title;
 */
 
 SELECT 
-    film.title, SUM( copy.price_renting)
+    film.title, SUM( copy.price_rent )
 FROM
     film,
     copy,
     renting
 WHERE
-    renting.fk_id_film = copy.fk_id_film
+    film.id_film = copy.fk_id_film
         AND copy.id_copy = renting.fk_id_copy
         AND film.year_film = '2002'
 GROUP BY film.title
-HAVING SUM( copy.price_renting ) > 5.5;
+HAVING SUM( copy.price_rent ) > 5.5;
 
 /*
 -- 12.-List all the titles and indicate wheter the rental price of their copies is equal or greater than 2.5 euros or less than 2.5 euros (two conditions). Don't do it using UNION. Use the structure most appropriate to the case. The output will be something like this:
@@ -278,7 +287,7 @@ FROM
     film,
     copy
 WHERE
-    renting.fk_id_film = copy.fk_id_film;
+    film.id_film = copy.fk_id_film;
 
 
 
@@ -303,14 +312,14 @@ SELECT DISTINCT
     'The copy ',
     copy.id_copy,
     ' rented by',
-    customer.name,
+    customer.customer_name,
     ' ',
-    customer.surname,
+    customer.customer_surname,
     CASE
-        WHEN estado = 'good' THEN ' is in a satisfactory condition '
-        WHEN estado = 'bad' THEN ' is in an unsatisfactory condition '
-        WHEN estado = 'regular' THEN ' is in an unsatisfactory condition '
-        WHEN estado = 'loosy' THEN ' is in an unsatisfactory condition '
+        WHEN copy.state = 'good' THEN ' is in a satisfactory condition '
+        WHEN copy.state = 'bad' THEN ' is in an unsatisfactory condition '
+        WHEN copy.state = 'regular' THEN ' is in an unsatisfactory condition '
+        WHEN copy.state = 'very bad' THEN ' is in an unsatisfactory condition '
         ELSE ' is in a not defined state '
     END AS Estate
 FROM
@@ -319,21 +328,21 @@ FROM
     copy
 WHERE
     customer.id_customer = renting.fk_id_customer
-        AND film.fk_id_copy = copy.id_copy;
+        AND renting.fk_id_copy = copy.id_copy;
 
 
 /* OPC 2: */
 
 SELECT CASE 
-WHEN copy.estate = "good" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.name, " is in an unsatisfactory condition."" )
-WHEN copy.estate = "regular" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.name, " is in an unsatisfactory condition.")
-WHEN copy.estate = "bad" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.name, " is in an unsatisfactory condition.")
-WHEN copy.estate = "'very bad'" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ",  customer.name," is in an unsatisfactory condition.")
+WHEN copy.state = "good" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.customer_name, " is in an unsatisfactory condition." )
+WHEN copy.state = "regular" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.customer_name, " is in an unsatisfactory condition.")
+WHEN copy.state = "bad" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.customer_name, " is in an unsatisfactory condition.")
+WHEN copy.state = "'very bad'" THEN concat_ws( " ", "The copy ", copy.id_copy, " rented by ",  customer.customer_name," is in an unsatisfactory condition.")
 ELSE concat_ws( " ", "The copy ", copy.id_copy, " rented by ", customer.customer_name, " is in an undefined state")
 END  AS situation
 FROM copy, customer,renting
-WHERE customer.id_customer = renting.id_customer
-   AND film.fk_id_copy = copy.id_copy;
+WHERE customer.id_customer = renting.fk_id_customer
+   AND renting.fk_id_copy = copy.id_copy;
 
 
 
@@ -342,18 +351,20 @@ WHERE customer.id_customer = renting.id_customer
 */
 
 UPDATE copy
-SET copy.price_renting = ROUND( copy.price_renting * 0.9, 2 )
-WHERE film.id_film IN (SELECT film.id_film
+SET copy.price_rent = ROUND( copy.price_rent * 0.9, 2 )
+WHERE film.id_film IN ( SELECT film.id_film
                                      FROM film
-                                     WHERE film.year = '2002');
+                                     WHERE film.year_film = '2002' );
 
 /* OPC 2: */
 
 UPDATE copy
-SET copy.price_renting = ROUND( copy.price_renting - copy.price_renting * 0.1, 2 )
-WHERE film.id_film IN (SELECT film.id_film
+SET copy.price_rent = ROUND( copy.price_rent - copy.price_rent * 0.1, 2 )
+WHERE film.id_film IN ( SELECT film.id_film
                                      FROM film
-                                     WHERE film.anio = '2002');
+                                     WHERE film.year_film = '2002' );
+
+
 
 /*
 -- 15.- Delete customers who have not rented any film in 2021 (0.5 points) 
