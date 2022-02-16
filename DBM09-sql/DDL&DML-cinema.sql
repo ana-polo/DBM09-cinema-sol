@@ -13,7 +13,7 @@ CREATE TABLE film (
 
 CREATE TABLE copy (
     id_copy CHAR( 8 ) NOT NULL, 
-    deteriored BOOLEAN DEFAULT FALSE NOT NULL, 
+    deteriorated BOOLEAN DEFAULT FALSE NOT NULL, 
     fk_id_film INTEGER NOT NULL, 
     price_rent DECIMAL( 3,  2 ) NOT NULL, 
     state ENUM('good',  'bad',  'regular',  'very bad') NOT NULL, 

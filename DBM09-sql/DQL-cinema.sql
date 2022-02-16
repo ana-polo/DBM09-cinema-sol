@@ -9,7 +9,7 @@ USE cinema;
 
 /*
 --  1.- List the name and surname of the customers who have rented the film 'La vida es bella'. Each customer must appear only once. (0.5 points)
-
+*/
  
 SELECT DISTINCT 
     customer.customer_name AS CUSTOMER,
@@ -137,7 +137,7 @@ FROM
     film
 WHERE
     renting.fk_id_film = film.id_film
-        AND copy.deteriored = TRUE 
+        AND copy.deteriorated = TRUE 
 UNION SELECT 
     CONCAT_WS( ' ',
             'The copy==>',
@@ -151,7 +151,7 @@ FROM
     film
 WHERE
     renting.fk_id_film = film.id_film
-        AND copy.deteriored = FALSE; 
+        AND copy.deteriorated = FALSE; 
 
 
 
@@ -205,7 +205,7 @@ FROM
     copy
 WHERE
     renting.fk_id_film = copy.fk_id_film
-        AND copy.deteriored = FALSE
+        AND copy.deteriorated = FALSE
         AND copy.price_renting = ( SELECT 
             MIN( copy.pricerenting )
         FROM
@@ -219,7 +219,7 @@ FROM
     copy
 WHERE
     renting.fk_id_film = copy.fk_id_film
-        AND copy.deteriored = FALSE
+        AND copy.deteriorated = FALSE
         AND copy.price_renting <= ALL ( SELECT 
             copy.price_renting
         FROM
@@ -261,18 +261,19 @@ HAVING SUM( copy.price_renting ) > 5.5;
 
 /*
 -- 12.-List all the titles and indicate wheter the rental price of their copies is equal or greater than 2.5 euros or less than 2.5 euros (two conditions). Don't do it using UNION. Use the structure most appropriate to the case. The output will be something like this:
-        'La vida es bella', 'The price is equal or greater than2.5 euros'
+        'La vida es bella', 'The price is equal or greater than 2.5 euros'
         'Los puentes de Madison', 'The price is equal or greater than 2.5 euros'
-        'Terror', 'the price is less than 2.5 euros'
+        'Terror', 'The price is less than 2.5 euros'
         'Aterriza como puedas', 'The price is equal or greater than 2.5 euros'
+    
     Repeated values should not be displayed (0.75 points)
 */
 
 SELECT DISTINCT
     film.title,
     IF( copy.price_rent >= 2.5,
-        ' El precio es mayor o igual a 2.5 euros',
-        'el precio es menor de 2.5 euros') AS price
+        'The price is equal or greater than 2.5 euros',
+        'The price is less than 2.5 euros') AS price
 FROM
     film,
     copy
