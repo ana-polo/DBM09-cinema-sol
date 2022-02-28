@@ -67,6 +67,8 @@ GROUP BY YEAR( renting_date ) , MONTH( renting_date );
 -- 4.- List the title of the films that have been rented in alphabetical order.  Each title must come out only once. Do it in three different ways (INNER JOIN, IN, EXISTS). (1 point)
 */
   
+/*OPTION 0: WITHOUT JOIN, IN OR EXISTS */
+
 SELECT DISTINCT film.title
 FROM film, copy, renting
 WHERE renting.fk_id_film = copy.fk_id_film
@@ -74,7 +76,16 @@ WHERE renting.fk_id_film = copy.fk_id_film
 ORDER BY film.title;
 
 
-/*OPTION 2: */
+/*OPTION 1: WITH JOIN  */
+
+SELECT DISTINCT film.title
+FROM ( film INNER JOIN copy 
+ON renting.fk_id_film = copy.fk_id_film ) INNER JOIN
+   ON copy.id_copy = renting.fk_id_copy
+ORDER BY film.title;
+
+
+/*OPTION 2: WITH IN WITHOUT JOIN */
 
 SELECT DISTINCT film.title
 FROM film, copy
@@ -84,7 +95,17 @@ WHERE film.id_film = copy.fk_id_film
 ORDER BY film.title;
 
 
-/* OPTION 3: */
+/*OPTION 3: WITH IN WITH JOIN */
+
+SELECT DISTINCT film.title
+FROM film INNER JOIN copy 
+ON film.id_film = copy.fk_id_film
+   AND copy.id_copy IN (SELECT renting.fk_id_copy 
+                                     FROM renting)
+ORDER BY film.title;
+
+
+/* OPTION 4: WITH EXISTS WITHOUT JOIN */
 
 SELECT DISTINCT film.title
 FROM film, copy
@@ -94,6 +115,16 @@ WHERE film.id_film = copy.fk_id_film
                 WHERE renting.fk_id_copy = copy.id_copy)
 ORDER BY film.title;
 
+
+/* OPTION 5: WITH EXISTS WITH JOIN */
+
+SELECT DISTINCT film.title
+FROM film, copy
+WHERE film.id_film = copy.fk_id_film
+   AND EXISTS ( SELECT renting.fk_id_copy 
+                FROM renting INNER JOIN copy
+                ON renting.fk_id_copy = copy.id_copy)
+ORDER BY film.title;
 
 
 /*
