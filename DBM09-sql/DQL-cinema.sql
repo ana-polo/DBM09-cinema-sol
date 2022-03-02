@@ -205,12 +205,10 @@ SELECT
         renting.deathline,
         renting.delivering_date) AS 'Delay'
 FROM
-    film,
     copy,
     renting
 WHERE
-    film.id_film = copy.fk_id_film
-        AND copy.id_copy = renting.fk_id_copy
+ copy.id_copy = renting.fk_id_copy
         AND renting.deathline < renting.delivering_date;
 
 
@@ -218,13 +216,29 @@ WHERE
 /*
 -- 8. Insert as a customer a cohabiting brother of Teresa Alvarez Perez who is called Pepe. The only data you can put literally are Pepe, Teresa and Alvarez Perez.  (0.75 points)
 */
-
+   
+    -- OPC 1: WITH MAX()
+    
 INSERT INTO customer
 SELECT ( 
     SELECT 
         MAX( customer.id_customer ) + 1 
     FROM 
         customer), 'Pepe', customer.customer_surname, customer.town
+FROM 
+    customer
+WHERE customer.customer_name = 'Teresa' 
+   AND customer.customer_surname = 'Alvarez Perez';
+
+
+    -- OPC 2: WITH LIMIT
+    
+INSERT INTO customer
+SELECT ( 
+    SELECT 
+        customer.id_customer )
+    FROM 
+        customer ORDER BY customer.id_customer LIMIT 1 ) + 1, 'Pepe', customer.customer_surname, customer.town
 FROM 
     customer
 WHERE customer.customer_name = 'Teresa' 
